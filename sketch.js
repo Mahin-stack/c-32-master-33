@@ -11,6 +11,7 @@ var bird, slingshot;
 var gameState = "onSling";
 var bg  = "sprites/back1.jpg"
 var score = 0
+var gameState = "start"
 
 function preload() {
     backgroundImg = loadImage("sprites/back1.jpg");
@@ -55,6 +56,9 @@ function draw(){
     text("Score"+score,300,50);
     text("Haunted !!",980,110)
 
+    if(gameState = "start" && score > 150){
+            text("You Win",700,100)   
+    }
     Engine.update(engine);
     //strokeWeight(4);
     box1.display();
@@ -90,11 +94,14 @@ function mouseDragged(){
 function mouseReleased(){
     slingshot.fly();
     gameState = "launched";
+    
 }
 
 function keyPressed(){
-    if(keyCode === 32){
-       // slingshot.attach(bird.body);
+    if(keyCode === 32 && bird.body.speed < 1){
+    bird.trajectory = []
+    Matter.Body.setPosition(bird.body,{x:200,y:50})
+       slingshot.attach(bird.body);
     }
 }
 
